@@ -5,7 +5,7 @@ This Repository Contains assembly codes for PIC 18 , it can be used as a referen
 
 
 | File Name     | Description   |
-| ------------- |:-------------:|
+|:-------------:|:-------------:|
 | Code_0        | Copy literal to WREG and performing Addition|
 | Code_1        | Selecting Bank 2 and put value into register 202H      |
 | Code_2        | Doing multiplication in PIC      |
