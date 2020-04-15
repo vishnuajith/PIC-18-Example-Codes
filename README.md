@@ -26,7 +26,7 @@ This Repository Contains assembly codes for PIC 18 , it can be used as a referen
 | Code_17       | Using PORTA and LATA      |
 | Code_18       | Using Timer0 and Port B interrupt       |
 | Code_19       | Using Timer0 and INT0 interrupt      |
-| Code_20       | Using Timer0 and Timer      |
+| Code_20       | Using Timer0 and Timer1      |
 | STEPPER CONTROL 3.0       | Controlling of Stepper motor using an android app -Final course project     |
 
 
