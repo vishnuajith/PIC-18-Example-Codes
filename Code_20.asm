@@ -1,0 +1,72 @@
+;*******************************************************
+;*  Description  :  Using Timer0 and Timer1 
+;*   
+;*******************************************************
+    
+    #INCLUDE<P18F452.INC>
+    CONFIG WDT=OFF
+    CONFIG OSC=HS
+    CONFIG OSCS=OFF
+    
+    ORG 0H
+    GOTO MAIN
+    
+    ORG 0008H
+    BTFSS INTCON,TMR0IF
+    RETFIE
+    GOTO T0_ISR
+
+    ORG 100H 
+MAIN BSF TRISC,6
+    BCF TRISD,1
+    BCF TRISB,7
+    MOVLW 0x08
+    MOVWF T0CON
+    MOVLW 0x63
+    MOVWF TMR0H
+    MOVLW 0xBF
+    MOVWF TMR0L
+    BCF INTCON,TMR0IF
+    BSF T0CON,TMR0ON
+    BSF INTCON,TMR0IE
+    BSF INTCON,GIE
+
+OVR BTFSC PORTC,6   ;POLLING RC6
+    GOTO ATW
+    BRA OVR
+    
+    ORG 200H
+ATW BCF INTCON,TMR0ON  ;1KHz @ RB7 AND RD1 HIGH
+    BCF TRISB,7
+    BCF TRISD,1
+    BSF PORTD,1        
+    MOVLW 0x30
+    MOVWF T1CON
+    
+HERE MOVLW 0xF6  
+    MOVWF TMR1H
+    MOVLW 0x3B
+    MOVWF TMR1L
+    BCF PIR1,TMR1IF
+    CALL DELAY
+    BTG PORTB,7
+    BRA HERE
+    RETURN
+    
+DELAY BSF T1CON,TMR1ON
+AGAIN BTFSS PIR1,TMR1IF
+    BRA AGAIN
+    BCF PIR1,TMR1ON
+    RETURN
+
+    ORG 500H
+T0_ISR MOVLW 0x63  ;500HZ @ RD1
+    MOVWF TMR0H
+    MOVLW 0xBF
+    MOVWF TMR0L
+    BTG PORTD,1
+    BCF INTCON,TMR0IF
+    RETFIE
+    END
+
+
